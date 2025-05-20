@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+let hasPlayedAnimation = false;
+
 export default function Home() {
   const [animationStage, setAnimationStage] = useState(0);
   // 0 = initial typing animation
@@ -14,7 +16,12 @@ export default function Home() {
   const fullText = "The New Page Project";
   
   useEffect(() => {
-    // Typing animation
+    if (hasPlayedAnimation) {
+      setAnimationStage(4);
+      setTypedText(fullText);
+      return;
+    }
+
     if (animationStage === 0) {
       if (typedText === fullText) {
         // When typing is complete, wait a moment before next stage
@@ -38,8 +45,9 @@ export default function Home() {
         
         // After animation completes, reveal content
         const finalTimer = setTimeout(() => {
+          hasPlayedAnimation = true;
           setAnimationStage(3);
-        }, 1000); // Animation duration (1s)
+        }, 500); // Animation duration 
         
         return () => clearTimeout(finalTimer);
       }, 1000); // Time before shrinking starts
@@ -50,7 +58,9 @@ export default function Home() {
   
   // Start typing when component mounts
   useEffect(() => {
-    setTypedText(fullText.substring(0, 1)); // Start with first character
+    if (!hasPlayedAnimation) {
+      setTypedText(fullText.substring(0, 1)); // Start with first character
+    }
   }, []);
 
   return (
