@@ -14,7 +14,7 @@ export default function About() {
   // 3 = header position, content revealed
   
   const [typedText, setTypedText] = useState("");
-  const fullText = "About";
+  const fullText = "The New Page Project";
   
   useEffect(() => {
     if (hasPlayedAnimation) {
