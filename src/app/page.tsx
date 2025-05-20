@@ -27,7 +27,7 @@ export default function Home() {
         // When typing is complete, wait a moment before next stage
         const timer = setTimeout(() => {
           setAnimationStage(1);
-        }, 800);
+        }, 100);
         return () => clearTimeout(timer);
       } else {
         // Continue typing
@@ -47,10 +47,10 @@ export default function Home() {
         const finalTimer = setTimeout(() => {
           hasPlayedAnimation = true;
           setAnimationStage(3);
-        }, 500); // Animation duration 
+        }, 800); // Animation duration 
         
         return () => clearTimeout(finalTimer);
-      }, 1000); // Time before shrinking starts
+      }, 300); // Time before shrinking starts
       
       return () => clearTimeout(timer);
     }
@@ -135,9 +135,11 @@ export default function Home() {
                     Donate Books
                   </button>
                 </Link>
-                <button className="border-2 border-amber-800 text-amber-800 hover:bg-amber-100 font-medium py-3 px-6 rounded-lg transition-colors">
-                  Our Impact
-                </button>
+                <Link href="/about">
+                  <button className="border-2 border-amber-800 text-amber-800 hover:bg-amber-100 font-medium py-3 cursor-pointer px-6 rounded-lg transition-colors">
+                    Our Impact
+                  </button>
+                </Link>
               </div>
             </div>
             

@@ -28,13 +28,13 @@ export default function About() {
         // When typing is complete, wait a moment before next stage
         const timer = setTimeout(() => {
           setAnimationStage(1);
-        }, 800);
+        }, 100);
         return () => clearTimeout(timer);
       } else {
         // Continue typing
         const timer = setTimeout(() => {
           setTypedText(fullText.substring(0, typedText.length + 1));
-        }, 100);
+        }, 50);
         return () => clearTimeout(timer);
       }
     }
@@ -48,10 +48,10 @@ export default function About() {
         const finalTimer = setTimeout(() => {
           hasPlayedAnimation = true;
           setAnimationStage(3);
-        }, 500); // Animation duration 
+        }, 800); // Animation duration 
         
         return () => clearTimeout(finalTimer);
-      }, 1000); // Time before shrinking starts
+      }, 200); // Time before shrinking starts
       
       return () => clearTimeout(timer);
     }

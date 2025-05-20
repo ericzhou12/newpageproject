@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 let hasPlayedAnimation = false;
 
-export default function Contact() {
+export default function Donate() {
   const [animationStage, setAnimationStage] = useState(0);
   // 0 = initial typing animation
   // 1 = typing complete, centered text
@@ -14,7 +14,7 @@ export default function Contact() {
   // 3 = header position, content revealed
   
   const [typedText, setTypedText] = useState("");
-  const fullText = "Contact";
+  const fullText = "Donate";
   
   useEffect(() => {
     if (hasPlayedAnimation) {
@@ -106,8 +106,8 @@ export default function Contact() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/donate" className="hover:text-amber-700 transition-colors">
-                    Donate
+                  <Link href="/contact" className="hover:text-amber-700 transition-colors">
+                    Contact
                   </Link>
                 </li>
               </ul>
