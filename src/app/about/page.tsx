@@ -14,7 +14,7 @@ export default function About() {
   // 3 = header position, content revealed
   
   const [typedText, setTypedText] = useState("");
-  const fullText = "The New Page Project";
+  const fullText = "About";
   
   useEffect(() => {
     if (hasPlayedAnimation) {
@@ -96,8 +96,8 @@ export default function About() {
             `}>
               <ul className="flex space-x-8 font-medium text-amber-900">
                 <li>
-                  <Link href="/about" className="hover:text-amber-700 transition-colors">
-                    About
+                  <Link href="/" className="hover:text-amber-700 transition-colors">
+                    Home
                   </Link>
                 </li>
                 <li>
