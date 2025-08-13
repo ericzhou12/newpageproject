@@ -1,120 +1,44 @@
-"use client";
+'use client';
 
-import React from 'react';
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { motion } from "framer-motion";
 
-let hasPlayedAnimation = false;
-
-export default function Contact() {
-  const [animationStage, setAnimationStage] = useState(0);
-  // 0 = initial typing animation
-  // 1 = typing complete, centered text
-  // 2 = animating to header
-  // 3 = header position, content revealed
-  
-  const [typedText, setTypedText] = useState("");
-  const fullText = "Contact";
-  
-  useEffect(() => {
-    if (hasPlayedAnimation) {
-      setAnimationStage(4);
-      setTypedText(fullText);
-      return;
-    }
-
-    if (animationStage === 0) {
-      if (typedText === fullText) {
-        // When typing is complete, wait a moment before next stage
-        const timer = setTimeout(() => {
-          setAnimationStage(1);
-        }, 100);
-        return () => clearTimeout(timer);
-      } else {
-        // Continue typing
-        const timer = setTimeout(() => {
-          setTypedText(fullText.substring(0, typedText.length + 1));
-        }, 50);
-        return () => clearTimeout(timer);
-      }
-    }
-    
-    // After centered text stage, start shrinking animation
-    if (animationStage === 1) {
-      const timer = setTimeout(() => {
-        setAnimationStage(2);
-        
-        // After animation completes, reveal content
-        const finalTimer = setTimeout(() => {
-          hasPlayedAnimation = true;
-          setAnimationStage(3);
-        }, 800); // Animation duration 
-        
-        return () => clearTimeout(finalTimer);
-      }, 200); // Time before shrinking starts
-      
-      return () => clearTimeout(timer);
-    }
-  }, [animationStage, typedText]);
-  
-  // Start typing when component mounts
-  useEffect(() => {
-    if (!hasPlayedAnimation) {
-      setTypedText(fullText.substring(0, 1)); // Start with first character
-    }
-  }, []);
-
+const ContactPage = () => {
   return (
-    <div className="relative w-full min-h-screen bg-amber-50 overflow-hidden">
-      {/* Navbar that animates */}
-      <header 
-        className={`fixed w-full transition-all duration-1000 ease-in-out z-20
-          ${animationStage < 2 ? 'top-1/2 -translate-y-1/2' : 'top-0 translate-y-0'}
-          ${animationStage >= 2 ? 'bg-amber-100 shadow-md' : ''}
-        `}
-      >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex items-center justify-between h-16 ${animationStage < 2 ? 'justify-center' : ''}`}>
-            {/* Logo/Title */}
-            <div className={`flex-shrink-0 transition-all duration-1000 
-              ${animationStage < 2 ? 'w-full text-center' : ''}
-            `}>
-              <Link href="/" className="inline-block">
-                <h1 className={`font-serif font-bold text-amber-900 
-                  ${animationStage < 2 ? 'text-6xl' : 'text-3xl'}
-                  ${animationStage < 2 ? 'border-r-4 border-amber-900' : ''}
-                `}>
-                  {typedText}
-                  {animationStage === 0 && <span className="inline-block w-2 ml-1 bg-amber-900 animate-pulse">&nbsp;</span>}
-                </h1>
-              </Link>
-            </div>
-            
-            {/* Navigation Links */}
-            <nav className={`transition-all duration-1000 ease-in-out
-              ${animationStage < 3 ? 'opacity-0 invisible' : 'opacity-100 visible'}
-            `}>
-              <ul className="flex space-x-8 font-medium text-amber-900">
-                <li>
-                  <Link href="/" className="hover:text-amber-700 transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/about" className="hover:text-amber-700 transition-colors">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/donate" className="hover:text-amber-700 transition-colors">
-                    Donate
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-background p-6"
+    >
+      <div className="text-center mb-12">
+        <h1 className="text-5xl font-heading font-bold text-text-primary">Contact Us</h1>
+        <p className="text-lg font-body text-text-secondary mt-4 max-w-3xl mx-auto">We would love to hear from you. Whether you have a question, a suggestion, or would like to partner with us, please do not hesitate to reach out.</p>
+      </div>
+
+      <div className="max-w-2xl mx-auto">
+        <form className="bg-secondary p-8 rounded-lg shadow-lg">
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-text-primary font-bold mb-2">Name</label>
+            <input type="text" id="name" className="shadow appearance-none border rounded w-full py-2 px-3 text-text-primary leading-tight focus:outline-none focus:shadow-outline" />
           </div>
-        </div>
-      </header>
-    </div>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-text-primary font-bold mb-2">Email</label>
+            <input type="email" id="email" className="shadow appearance-none border rounded w-full py-2 px-3 text-text-primary leading-tight focus:outline-none focus:shadow-outline" />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="message" className="block text-text-primary font-bold mb-2">Message</label>
+            <textarea id="message" className="shadow appearance-none border rounded w-full py-2 px-3 text-text-primary leading-tight focus:outline-none focus:shadow-outline" rows={5}></textarea>
+          </div>
+          <div className="text-center">
+            <button type="submit" className="bg-primary hover:bg-accent text-text-primary font-bold py-3 px-6 rounded-full transition-colors duration-300">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </motion.div>
   );
-}
+};
+
+export default ContactPage;
