@@ -1,33 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #5C3A3A;
-  --foreground: #FDF8F0;
-  --font-heading: 'Lora', serif;
-  --font-body: 'Open Sans', sans-serif;
+  --book-brown: #8B4513;
+  --page-cream: #FDF8F0;
+  --text-dark: #2C1810;
+  --accent-gold: #D4AF37;
+  --shadow-brown: rgba(139, 69, 19, 0.3);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-body);
-  --font-mono: var(--font-mono);
-  --font-heading: var(--font-heading);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #FDF8F0;
-    --foreground: #5C3A3A;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #ffffff 0%, #5e2f1a 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: 'Crimson Text', serif;
+}
+
+.book-container {
+  perspective: 2000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.book {
+  position: relative;
+  width: 800px;
+  height: 600px;
+  max-width: 90vw;
+  max-height: 80vh;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease-in-out;
+}
+
+.book.open {
+  transform: rotateY(-15deg);
+}
+
+.book-cover, .book-page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px var(--shadow-brown);
+}
+
+.book-cover {
+  background: linear-gradient(45deg, var(--book-brown), #A0522D);
+  transform-origin: left center;
+  transition: transform 0.8s ease-in-out;
+  z-index: 10;
+}
+
+.book-cover.flipped {
+  transform: rotateY(-180deg);
+}
+
+.book-page {
+  background: var(--page-cream);
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 69, 19, 0.05) 0%, transparent 50%);
+  transform-origin: left center;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.page-content {
+  flex: 1;
+  color: var(--text-dark);
+}
+
+.page-flip-enter {
+  transform: rotateY(180deg);
+}
+
+.page-flip-enter-active {
+  transform: rotateY(0deg);
+  transition: transform 0.6s ease-in-out;
+}
+
+.page-flip-exit {
+  transform: rotateY(0deg);
+}
+
+.page-flip-exit-active {
+  transform: rotateY(-180deg);
+  transition: transform 0.6s ease-in-out;
+}
+
+.book-spine {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(to right, #654321, var(--book-brown));
+  border-radius: 4px 0 0 4px;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  .book-container {
+    padding: 10px;
+  }
+  
+  .book {
+    width: 95vw;
+    height: 75vh;
+    min-height: 500px;
+  }
+  
+  .book-page {
+    padding: 16px;
+    font-size: 14px;
+  }
+  
+  .book.open {
+    transform: none;
+  }
+  
+  .book-cover {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .book {
+    height: 80vh;
+    min-height: 450px;
+  }
+  
+  .book-page {
+    padding: 12px;
+  }
 }
